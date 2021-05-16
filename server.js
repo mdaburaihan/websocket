@@ -2,6 +2,7 @@ const express = require('express');
 const http = require('http');
 const path = require('path');
 const socketio = require('socket.io');
+const { generateMessage } = require("./src/utils/messages");
 
 const app = express();
 const server = http.createServer(app);
@@ -23,10 +24,12 @@ io.on('connection', (socket) => {
     //     //socket.emit("countUpdated", count);
     //     io.emit("countUpdated", count);
     // })
-    socket.emit("welcomeMessage", "Welcome!!");
-    socket.broadcast.emit("welcomeMessage", "A new user has joined")
+    socket.emit("welcomeMessage", generateMessage("Welcome!!"));
+
+    socket.broadcast.emit("welcomeMessage", "A new user has joined");
+
     socket.on("sendMessage", (message, callback) => {
-        io.emit("message", message);
+        io.emit("message", generateMessage(message));
         callback("Delivered");
     });
 

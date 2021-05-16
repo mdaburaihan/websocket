@@ -1,5 +1,4 @@
 const socket = io();
-
 // socket.on('countUpdated', (count) => {
 //     console.log("The count has been updated", count);
 // });
@@ -30,7 +29,7 @@ $messageForm.addEventListener("submit", (e) => {
     //const message = document.querySelector("input").value;
     const message = e.target.elements.message.value;
     socket.emit("sendMessage", message, (msg) =>{
-
+  
         $messageFormButton.removeAttribute("disabled");
         $messageFormInput.value = "";
         $messageFormInput.focus();
