@@ -8,9 +8,15 @@ const socket = io();
 //     console.log("Clicked");
 //     socket.emit("increment");
 // });
+
+//Elements
 const $messageForm = document.querySelector("#message-form");
 const $messageFormInput = $messageForm.querySelector("input");
 const $messageFormButton = $messageForm.querySelector("button");
+const $messages = document.querySelector("#messages");
+
+//Templates
+const messageTemplate = document.querySelector("#message-template").innerHTML;
 
 socket.on('welcomeMessage', (message) => {
     console.log(message);
@@ -28,6 +34,12 @@ $messageForm.addEventListener("submit", (e) => {
         $messageFormInput.value = "";
         $messageFormInput.focus();
         console.log("The message was delivered", msg);
+
+        const html = Mustache.render(messageTemplate, {
+            message
+        });
+
+        $messages.insertAdjacentHTML("beforeend", html)
     });
 });
 
@@ -50,4 +62,5 @@ $sendLocationBtn.addEventListener("click", () => {
 
 socket.on('message', (message) => {
     console.log(message);
+    
 });
